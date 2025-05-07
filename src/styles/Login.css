@@ -1,0 +1,60 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 20px;
+}
+
+.login-container .MuiContainer-root {
+  padding: 0;
+}
+
+.login-container .MuiBox-root {
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-container .MuiTextField-root {
+  margin-bottom: 16px;
+}
+
+.login-container .MuiButton-root {
+  text-transform: none;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.login-container .MuiDivider-root {
+  margin: 24px 0;
+}
+
+.login-container .MuiIconButton-root {
+  padding: 12px;
+  transition: all 0.3s ease;
+}
+
+.login-container .MuiIconButton-root:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-container .MuiLink-root {
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.login-container .MuiLink-root:hover {
+  color: #1976d2;
+}
+
+@media (max-width: 600px) {
+  .login-container {
+    padding: 10px;
+  }
+  
+  .login-container .MuiBox-root {
+    padding: 1.5rem;
+  }
+} 

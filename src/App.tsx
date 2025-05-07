@@ -8,7 +8,8 @@ import MainPage from './components/MainPage';
 import ProductDetail from './components/ProductDetail';
 import CartPage from './pages/CartPage';
 import { useSelector } from 'react-redux';
-import { RootState } from './store/store';
+import { RootState }   from './store/store';
+import LoginPage       from './components/Login';
 import './styles/App.css';
 
 // Create a theme instance
@@ -30,7 +31,10 @@ const AppContent = () => {
     <div className="app">
       <header className="app-header">
         <nav>
-          <Link to="/" className="nav-link">홈</Link>
+          <div className="nav-links-left">
+            <Link to="/" className="nav-link">홈</Link>
+            <Link to="/login" className="nav-link">로그인</Link>
+          </div>
           <Link to="/cart" className="nav-link cart-link">
             장바구니
             {cartItems.length > 0 && (
@@ -45,6 +49,7 @@ const AppContent = () => {
           <Route path="/" element={<MainPage />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </main>
 
