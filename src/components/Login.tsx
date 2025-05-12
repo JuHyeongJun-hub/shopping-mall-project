@@ -18,48 +18,81 @@ import {
   Facebook as FacebookIcon,
   Apple as AppleIcon
 } from '@mui/icons-material';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 
+// interface LoginResponse {
+//   token: string;
+//   user: {
+//     id: number;
+//     email: string;
+//     name: string;
+//     role: string;
+//   };
+// }
+
 interface LoginResponse {
   token: string;
-  user: {
+  user : {
     id: number;
     email: string;
     name: string;
     role: string;
-  };
+  }
+}
+
+interface LoginError {
+  message: string;
+}
+
+interface SignupError {
+  message: string;
 }
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError]       = useState('');
+  const [loading, setLoading]   = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const navigate                = useNavigate();
+  
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // 에러메시지와 로딩 상태를 초기화한다.
     setError('');
+    setLoading(true);
 
-    try {
+    try{
+      // 로그인 요청을 하는 axios를 요청한다. (파라미터 email과 password를 전달한다.)
       const response = await axios.post<LoginResponse>('http://localhost:8080/api/auth/login', {
         email,
         password
-      });
+      })
 
+      // 로그인 성공 시, 토큰과 사용자 정보를 로컬 스토리지에 저장 후 메인 페이지로 이동한다.
       localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+      localStorage.setItem('user' , JSON.stringify(response.data.user));
       navigate('/');
-    } catch (err: any) {
-      if (err.response?.status === 401) {
-        setError('이메일 또는 비밀번호가 올바르지 않습니다.');
+    } catch(err) {
+      if(err instanceof AxiosError) {
+        // 만약 401 에러가 발생하면 "이메일 또는 비밀번호가 올바르지 않았습니다."라는 메시지를 보여준다.
+        if(err.response?.status === 401) {
+          setError('이메일 또는 비밀번호가 올바르지 않습니다.');
+        } else {
+          // 만약 401 에러가 아니면 서버의 메세지를 보여주고, 그것도 아니면 "로그인 중 오류가 발생하였습니다. 다시 시도해주세요"라는 메시지를 보여준다.
+          //const errorMessage = ( err.response?.data as LoginError)?.message || '로그인 중 오류가 발생하였습니다. 다시 시도해주세요';
+          const errorMessage = (err.response?.data as LoginError)?.message || '로그인 중 오류가 발생하였습니다. 다시 시도해주세요';
+          setError(errorMessage);
+        }
       } else {
-        setError('로그인 중 오류가 발생했습니다. 다시 시도해주세요.');
+        setError('로그인 중 오류가 발생하였습니다. 다시 시도해주세요.');
       }
+    } finally {
+      setLoading(false);
     }
-  };
+  }
 
   return (
     <Container component="main" maxWidth="xs" className="login-container">

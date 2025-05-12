@@ -10,6 +10,7 @@ import CartPage from './pages/CartPage';
 import { useSelector } from 'react-redux';
 import { RootState }   from './store/store';
 import LoginPage       from './components/Login';
+import Signup          from './components/Signup';
 import './styles/App.css';
 
 // Create a theme instance
@@ -32,8 +33,8 @@ const AppContent = () => {
       <header className="app-header">
         <nav>
           <div className="nav-links-left">
-            <Link to="/" className="nav-link">홈</Link>
-            <Link to="/login" className="nav-link">로그인</Link>
+          <Link to="/" className="nav-link">홈</Link>
+          <Link to="/login" className="nav-link">로그인</Link>
           </div>
           <Link to="/cart" className="nav-link cart-link">
             장바구니
@@ -50,6 +51,7 @@ const AppContent = () => {
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </main>
 
