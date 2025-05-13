@@ -24,7 +24,13 @@ public class User {
     private String name;
 
     @Column(nullable = false)
-    private String role;
+    private String phoneNumber;
+
+    @Column(nullable = false)
+    private String address;
+
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

@@ -28,19 +28,30 @@ interface SignupError {
 }
 
 const Signup = () => {
+  // const [formData, setFormData] = useState({
+  //   email   : '',
+  //   password: '',
+  //   passwordConfirm: '',
+  //   name: ''
+  // });
+
   const [formData, setFormData] = useState({
-    email   : '',
+    email: '',
     password: '',
     passwordConfirm: '',
     name: ''
-  });
-
+  })
   console.log(JSON.stringify(formData));
 
-  const [error  , setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  // const [error       , setError]        = useState('');
+  // const [loading     , setLoading]      = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
+  // const navigate = useNavigate();
+
+  const [error, setError]               = useState('');
+  const [loading, setLoading]           = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
+  const navigate                        = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -75,15 +86,6 @@ const Signup = () => {
                 setError(errorMessage);
             }
         }
-    //   if (err instanceof AxiosError) {
-    //     if (err.response?.status === 409) {
-    //       setError('이미 사용 중인 이메일입니다.');
-    //     } else {
-    //       const errorMessage = (err.response?.data as SignupError)?.message || 
-    //         '회원가입 중 오류가 발생했습니다.';
-    //       setError(errorMessage);
-    //     }
-    //   }
     } finally {
       setLoading(false);
     }
